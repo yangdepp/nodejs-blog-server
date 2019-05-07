@@ -28,7 +28,29 @@ const getDetail = id => {
   };
 };
 
+const newBlog = (blogData = {}) => {
+  // blogData 是一个博客对象，包含 title content属性
+  return {
+    id: 3 //新建博客插入到数据库里的id
+  };
+};
+
+const updateBlog = (id, blogData = {}) => {
+  // blogData 是一个博客对象，包含 title content属性
+  // id是要更新博客的id
+
+  console.log('update blog', id, blogData);
+  return true;
+};
+
+const delBlog = id => {
+  // id是要删除博客的id
+  return true;
+};
 module.exports = {
   getList,
-  getDetail
+  getDetail,
+  newBlog,
+  updateBlog,
+  delBlog
 };
