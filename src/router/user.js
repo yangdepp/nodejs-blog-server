@@ -1,11 +1,14 @@
+const { loginCheck } = require('../controller/user');
+const { SuccessModel, ErrorModel } = require('../model/resModel');
+
 const handleUserRouter = (req, res) => {
   const method = req.method;
 
-  // 获取博客列表
+  // 登录
   if (method === 'POST' && req.path === '/api/user/login') {
-    return {
-      msg: '这是登录的接口',
-    };
+    const { username, password } = req.body;
+    const result = loginCheck(username, password);
+    return result ? new SuccessModel() : new ErrorModel('登录失败');
   }
 };
 module.exports = handleUserRouter;
