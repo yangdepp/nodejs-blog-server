@@ -1,10 +1,4 @@
-const {
-  getList,
-  getDetail,
-  newBlog,
-  updateBlog,
-  delBlog
-} = require('../controller/blog');
+const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../controller/blog');
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 
 const handleBlogRouter = (req, res) => {
@@ -24,16 +18,20 @@ const handleBlogRouter = (req, res) => {
 
   // 获取博客详情
   if (method === 'GET' && req.path === '/api/blog/detail') {
-    const id = req.query.id;
-    const data = getDetail(id);
-    return new SuccessModel(data);
+    const result = getDetail(id);
+    return result.then(data => {
+      return new SuccessModel(data);
+    });
   }
 
   // 新建一篇博客
   if (method === 'POST' && req.path === '/api/blog/new') {
-    const blogData = req.body;
-    const data = newBlog(blogData);
-    return new SuccessModel(data);
+    // 作者用假数据，待开发登录后改成真实数据
+    req.body.author = 'yangnew';
+    const result = newBlog(req.body);
+    return result.then(data => {
+      return new SuccessModel(data);
+    });
   }
 
   // 更新一篇博客
