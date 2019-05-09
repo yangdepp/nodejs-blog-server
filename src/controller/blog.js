@@ -41,13 +41,24 @@ const updateBlog = (id, blogData = {}) => {
   // blogData 是一个博客对象，包含 title content属性
   // id是要更新博客的id
 
-  console.log('update blog', id, blogData);
-  return true;
+  const { title, content } = blogData;
+  const sql = `
+    update blogs set title='${title}', content='${content}' where id=${id}
+  `;
+  return exec(sql).then(updateData => {
+    // console.log('updateData', updateData);
+    return updateData.affectedRows > 0;
+  });
 };
 
-const delBlog = id => {
+const delBlog = (id, author) => {
   // id是要删除博客的id
-  return true;
+  const sql = `
+    delete from blogs where id='${id}' and author='${author}'
+  `;
+  return exec(sql).then(deleteData => {
+    return deleteData.affectedRows > 0;
+  });
 };
 module.exports = {
   getList,
