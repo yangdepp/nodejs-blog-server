@@ -41,3 +41,10 @@ select * from users where state <> '0';  --查询state！=1的数据
 update users set state='0' where username="deng";  --设置deng的state=0，软删除
 
 ```
+
+
+2. redis
+```js
+windows: cd C:\Program Files\redis
+          redis-server.exe redis.windows.conf
+```
