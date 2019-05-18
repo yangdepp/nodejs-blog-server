@@ -6,7 +6,7 @@ if (env === 'dev') {
   MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
-    password: 'Mysql_2018',
+    password: '1234',
     port: '3306',
     database: 'myblog'
   };
@@ -16,7 +16,7 @@ if (env === 'producton') {
   MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
-    password: 'Mysql_2018',
+    password: '1234',
     port: '3306',
     database: 'myblog'
   };
