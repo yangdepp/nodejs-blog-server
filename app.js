@@ -54,14 +54,15 @@ const serverHandle = (req, res) => {
   });
 
   // 解析session
-  const needSetCookie = false
-  const userId = req.cookie.userid;
+  let needSetCookie = false;
+  let userId = req.cookie.userid;
 
   if (userId) {
     if (!SESSION_DATA[userId]) {
       SESSION_DATA[userId] = {};
     }
   } else {
+    needSetCookie = true;
     userId = `${Date.now()}_${Math.random()}`;
     SESSION_DATA[userId] = {};
   }
@@ -81,6 +82,9 @@ const serverHandle = (req, res) => {
     const blogResult = handleBlogRouter(req, res);
     if (blogResult) {
       blogResult.then(blogData => {
+        if (needSetCookie) {
+          res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly`);
+        }
         res.end(JSON.stringify(blogData));
       });
       return;
@@ -90,6 +94,9 @@ const serverHandle = (req, res) => {
     const userResult = handleUserRouter(req, res);
     if (userResult) {
       userResult.then(userData => {
+        if (needSetCookie) {
+          res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly`);
+        }
         res.end(JSON.stringify(userData));
       });
       return;
