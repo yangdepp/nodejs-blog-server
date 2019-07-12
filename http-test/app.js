@@ -8,21 +8,30 @@ const serevr = http.createServer((req, res) => {
   const path = url.split('?')[0];
   const query = queryString.parse(url.split('?')[1]);
 
-  //设置返回格式为JSON
+  // 设置返回格式为JSON
   res.setHeader('Content-type', 'application/json');
 
-});
+  // 返回的数据
+  const resData = {
+    method,
+    url,
+    path,
+    query,
+  };
 
-const serevr = http.createServer((req, res) => {
-  if (req.method === 'POST') {
-    console.log('req content-type: ', req.headers['content-type']);
+  if (method === 'GET') {
+    res.end(JSON.stringify(resData));
+  }
+
+  // POST请求
+  if (method === 'POST') {
     let postData = '';
-    req.on('data', chunk => {
+    req.on('data', (chunk) => {
       postData += chunk.toString();
     });
-    req.on('end', () => {
-      console.log('postData', postData);
-      res.end('hello world');
+    req.on('end', (chunk) => {
+      resData.postData = postData;
+      res.end(JSON.stringify(resData));
     });
   }
 });
