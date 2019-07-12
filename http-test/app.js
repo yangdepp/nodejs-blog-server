@@ -1,14 +1,17 @@
+// http请求综合示例
 const http = require('http');
-// const queryString = require('querystring');
+const queryString = require('querystring');
 
-// const serevr = http.createServer((req, res) => {
-//   console.log(req.method);
-//   const url = req.url;
-//   console.log('url', url);
-//   req.query = queryString.parse(url.split('?')[1]);
-//   console.log('query', req.query);
-//   res.end(JSON.stringify(req.query));
-// });
+const serevr = http.createServer((req, res) => {
+  const method = req.method;
+  const url = req.url;
+  const path = url.split('?')[0];
+  const query = queryString.parse(url.split('?')[1]);
+
+  //设置返回格式为JSON
+  res.setHeader('Content-type', 'application/json');
+
+});
 
 const serevr = http.createServer((req, res) => {
   if (req.method === 'POST') {
