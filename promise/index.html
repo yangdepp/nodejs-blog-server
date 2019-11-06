@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>手写一个Promise</title>
+</head>
+
+<body>
+  <script src="./promise.js"></script>
+  <script>
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1)
+        // reject(2)
+        console.log('111')
+      }, 100)
+    })
+    p.then(value => {
+      console.log('onreResolved1()', value)
+    }, reason => {
+      console.log('onreRejected1()', reason)
+    })
+    p.then(value => {
+      console.log('onreResolved2()', value)
+    }, reason => {
+      console.log('onreRejected2()', reason)
+    })
+  </script>
+</body>
+
+</html>
