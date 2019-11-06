@@ -13,17 +13,18 @@
   <script>
     const p = new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(1)
-        // reject(2)
+        // resolve(1)
+        reject(2)
         console.log('111')
       }, 100)
     })
     p.then(value => {
       console.log('onreResolved1()', value)
+      return 3
     }, reason => {
       console.log('onreRejected1()', reason)
-    })
-    p.then(value => {
+      return 2
+    }).then(value => {
       console.log('onreResolved2()', value)
     }, reason => {
       console.log('onreRejected2()', reason)

@@ -7,15 +7,15 @@
   function Promise(excutor) {
     const _this = this;
 
-    _this.status = 'PENDING';
+    _this.status = PENDING;
     _this.data = undefined;
     _this.callbacks = [];
 
     function resolve(value) {
-      if (_this.status !== 'PENDING') {
+      if (_this.status !== PENDING) {
         return;
       }
-      _this.status = 'RESOLVED';
+      _this.status = RESOLVED;
       _this.data = value;
       if (_this.callbacks.length > 0) {
         setTimeout(() => {
@@ -26,10 +26,10 @@
       }
     }
     function reject(reason) {
-      if (_this.status !== 'PENDING') {
+      if (_this.status !== PENDING) {
         return;
       }
-      _this.status = 'REJECTED';
+      _this.status = REJECTED;
       _this.data = reason;
       if (_this.callbacks.length > 0) {
         setTimeout(() => {
