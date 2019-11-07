@@ -125,9 +125,47 @@
     });
   };
 
-  Promise.all = function(promises) {};
+  Promise.all = function(promises) {
+    // 用来保存所有成功value的值
+    const values = new Array(promises.length);
 
-  Promise.race = function(promises) {};
+    // 保存成功promise的数量
+    let resovleCount = 0;
+
+    return new Promise((resolve, reject) => {
+      // 遍历获取每个promise的结果
+      promises.forEach((p, index) => {
+        p.then(
+          value => {
+            resovleCount++;
+            values[index] = value;
+            if (resovleCount === promises.length) {
+              resolve(values);
+            }
+          },
+          reason => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  };
+
+  Promise.race = function(promises) {
+    // 返回哟个promise
+    return new Promise((resolve, reject) => {
+      promises.forEach((p, index) => {
+        p.then(
+          value => {
+            resolve(value);
+          },
+          reason => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  };
 
   window.Promise = Promise;
 })(window);

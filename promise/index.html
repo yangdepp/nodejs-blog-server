@@ -39,16 +39,30 @@
       const p1 = Promise.resolve(2);
       const p2 = Promise.resolve(3);
       const p3 = Promise.resolve(4);
+      const p4 = new Promise(resolve => {
+        setTimeout(() => {
+          resolve(5);
+        }, 5000);
+      });
 
-      p1.then(value => {
-        console.log(value);
-      });
-      p2.then(value => {
-        console.log(value);
-      });
-      p3.then(reason => {
-        console.log(reason);
-      });
+      // p1.then(value => {
+      //   console.log(value);
+      // });
+      // p2.then(value => {
+      //   console.log(value);
+      // });
+      // p3.then(reason => {
+      //   console.log(reason);
+      // });
+      const pAll = Promise.race([p4, p3, p2, p1]);
+      pAll.then(
+        value => {
+          console.log("race onResolved", value);
+        },
+        reason => {
+          console.log("race onRejected", reason);
+        }
+      );
     </script>
   </body>
 </html>
