@@ -135,7 +135,7 @@
     return new Promise((resolve, reject) => {
       // 遍历获取每个promise的结果
       promises.forEach((p, index) => {
-        p.then(
+        Promise.resolve(p).then(
           value => {
             resovleCount++;
             values[index] = value;
@@ -155,7 +155,7 @@
     // 返回哟个promise
     return new Promise((resolve, reject) => {
       promises.forEach((p, index) => {
-        p.then(
+        Promise.resolve(p).then(
           value => {
             resolve(value);
           },
