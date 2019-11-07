@@ -1,7 +1,7 @@
 (function(window) {
-  const PENDING = 'pending';
-  const RESOLVED = 'resolved';
-  const REJECTED = 'rejected';
+  const PENDING = "pending";
+  const RESOLVED = "resolved";
+  const REJECTED = "rejected";
 
   // Promise构造函数
   function Promise(excutor) {
@@ -19,7 +19,7 @@
       _this.data = value;
       if (_this.callbacks.length > 0) {
         setTimeout(() => {
-          _this.callbacks.forEach((callbacksObj) => {
+          _this.callbacks.forEach(callbacksObj => {
             callbacksObj.onResolved(value);
           });
         });
@@ -33,7 +33,7 @@
       _this.data = reason;
       if (_this.callbacks.length > 0) {
         setTimeout(() => {
-          _this.callbacks.forEach((callbacksObj) => {
+          _this.callbacks.forEach(callbacksObj => {
             callbacksObj.onRejected(reason);
           });
         });
@@ -53,11 +53,11 @@
    * 返回一个新的Promise对象
    */
   Promise.prototype.then = function(onResolved, onRejected) {
-    onResolved = typeof onResolved === 'function' ? onResolved : (value) => value;
+    onResolved = typeof onResolved === "function" ? onResolved : value => value;
     onRejected =
-      typeof onRejected === 'function'
+      typeof onRejected === "function"
         ? onRejected
-        : (reason) => {
+        : reason => {
             throw reason;
           };
     const _this = this;
@@ -83,7 +83,7 @@
           },
           onRejected() {
             handle(onRejected);
-          },
+          }
         });
       } else if (_this.status === RESOLVED) {
         setTimeout(() => {
@@ -108,9 +108,22 @@
   /**
    *
    */
-  Promise.resolve = function(value) {};
+  Promise.resolve = function(value) {
+    return new Promise((resolve, reject) => {
+      if (value instanceof Promise) {
+        value.then(resolve, reject);
+      } else {
+        resolve(value);
+      }
+    });
+  };
 
-  Promise.reject = function(reason) {};
+  Promise.reject = function(reason) {
+    // 返回一个失败的promise
+    return new Promise((resolve, reject) => {
+      reject(reason);
+    });
+  };
 
   Promise.all = function(promises) {};
 
