@@ -1,10 +1,10 @@
-(function(window) {
-  const PENDING = 'pending';
-  const RESOLVED = 'resolved';
-  const REJECTED = 'rejected';
+const PENDING = 'pending';
+const RESOLVED = 'resolved';
+const REJECTED = 'rejected';
 
+class Promise {
   // Promise构造函数
-  function Promise(excutor) {
+  constructor(excutor) {
     const _this = this;
 
     _this.status = PENDING;
@@ -47,12 +47,11 @@
       reject(error);
     }
   }
-
   /**
    * 指定成功和失败的回调函数
    * 返回一个新的Promise对象
    */
-  Promise.prototype.then = function(onResolved, onRejected) {
+  then(onResolved, onRejected) {
     onResolved = typeof onResolved === 'function' ? onResolved : (value) => value;
     onRejected =
       typeof onRejected === 'function'
@@ -95,20 +94,20 @@
         });
       }
     });
-  };
+  }
 
   /**
    * 指定失败的回调函数
    * 返回一个新的Promise对象
    */
-  Promise.prototype.catch = function(onRejected) {
+  catch(onRejected) {
     return this.then(undefined, onRejected);
-  };
+  }
 
   /**
    *
    */
-  Promise.resolve = function(value) {
+  static resolve = function(value) {
     return new Promise((resolve, reject) => {
       if (value instanceof Promise) {
         value.then(resolve, reject);
@@ -118,14 +117,14 @@
     });
   };
 
-  Promise.reject = function(reason) {
+  static reject = function(reason) {
     // 返回一个失败的promise
     return new Promise((resolve, reject) => {
       reject(reason);
     });
   };
 
-  Promise.all = function(promises) {
+  static all = function(promises) {
     // 用来保存所有成功value的值
     const values = new Array(promises.length);
 
@@ -151,7 +150,7 @@
     });
   };
 
-  Promise.race = function(promises) {
+  static race = function(promises) {
     // 返回哟个promise
     return new Promise((resolve, reject) => {
       promises.forEach((p, index) => {
@@ -168,7 +167,7 @@
   };
 
   // 在指定的时间后，返回一个成功或者失败的promise
-  Promise.resolveDelay = function(value, time) {
+  static resolveDelay = function(value, time) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (value instanceof Promise) {
@@ -180,13 +179,13 @@
     });
   };
   // 在指定的时间后，返回一个失败的promise
-  Promise.rejectDelay = function(reason, time) {
+  static rejectDelay = function(reason, time) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         reject(reason);
       }, time);
     });
   };
+}
 
-  window.Promise = Promise;
-})(window);
+export default Promise;

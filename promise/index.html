@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>手写一个Promise</title>
-  </head>
 
-  <body>
-    <script src="./promise.js"></script>
-    <!-- <script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>手写一个Promise</title>
+</head>
+
+<body>
+  <!-- <script src="./promise.js"></script> -->
+  <script src="./promise_class.js"></script>
+  <script>
       const p = new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve(1);
@@ -34,35 +36,42 @@
           console.log("onreRejected2()", reason);
         }
       );
-    </script> -->
-    <script>
-      const p1 = Promise.resolve(2);
-      const p2 = Promise.resolve(3);
-      const p3 = Promise.resolve(4);
-      const p4 = new Promise(resolve => {
-        setTimeout(() => {
-          resolve(5);
-        }, 5000);
-      });
-
-      // p1.then(value => {
-      //   console.log(value);
-      // });
-      // p2.then(value => {
-      //   console.log(value);
-      // });
-      // p3.then(reason => {
-      //   console.log(reason);
-      // });
-      const pAll = Promise.race([p4, p3, p2, p1]);
-      pAll.then(
-        value => {
-          console.log("race onResolved", value);
-        },
-        reason => {
-          console.log("race onRejected", reason);
-        }
-      );
     </script>
-  </body>
+  <script>
+    // const p1 = Promise.resolve(2);
+    // const p2 = Promise.resolve(3);
+    // const p3 = Promise.resolve(4);
+    // const p4 = new Promise(resolve => {
+    //   setTimeout(() => {
+    //     resolve(5);
+    //   }, 5000);
+    // });
+
+    // p1.then(value => {
+    //   console.log(value);
+    // });
+    // p2.then(value => {
+    //   console.log(value);
+    // });
+    // p3.then(reason => {
+    //   console.log(reason);
+    // });
+    // const pAll = Promise.race([p4, p3, p2, p1]);
+    // pAll.then(
+    //   value => {
+    //     console.log("race onResolved", value);
+    //   },
+    //   reason => {
+    //     console.log("race onRejected", reason);
+    //   }
+    // );
+  </script>
+  <script>
+    const pp = Promise.resolveDelay(1, 1000)
+    pp.then((value) => {
+      console.log(value)
+    })
+  </script>
+</body>
+
 </html>
